@@ -1,0 +1,14 @@
+{
+  "name": "su2.ru",
+  "version": "1.0.0",
+  "description": "sign-up user with mongodb",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "author": "xded",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
