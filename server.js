@@ -27,12 +27,6 @@ app.use(session({
   })
 }));
 
-// parse incoming requests
-//app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: false }));
-
-
-
 dbase.on ('error', console.error.bind(console, 'connection error:'));
 dbase.once('open', () => {
     require('./app/routes')(app);
@@ -46,20 +40,7 @@ dbase.once('open', () => {
                     ' dbase: ' +  dbName, '\n');
     });
 });
-// error handler
-// define as the last app.use callback
-/*app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err.message);
-});
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('File Not Found I\'m sorry');
-  console.log('========File Not Found I\'m sorry===========');
-  err.status = 404;
-  next(err);
-});
-*/
+
 process.on("SIGINT", () => {
     console.log('\ndb is closed'); 
     mongoose.disconnect();
