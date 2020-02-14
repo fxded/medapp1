@@ -1,15 +1,15 @@
 //ajax(url, method, functionName, dataArray)
 
 
-/*document.querySelector('#btnsnd').onclick = function () {
+document.querySelector('#loginBtn').onclick = function () {
     let email = document.querySelector('#login-email').value,
         password = document.querySelector('#login-password').value,
         data = JSON.stringify({ email: email,
                                 password: password  });
-        
-    ajax('/login', 'POST', logFunc, data);
+
+    ajax('/login', 'POST', toProfile, data);
 }
-*/
+
 document.querySelector('#signup-submit').onclick = function () {
     let name = document.querySelector('#signup-name').value,
         pass = document.querySelector('#signup-pass').value,
@@ -29,6 +29,11 @@ document.querySelector('#signup-submit').onclick = function () {
 function showData(data) {
     data = JSON.parse(data.response);
     console.log('user cred: ', data);
+}
+
+function toProfile(data) {
+    document.querySelector('body').innerHTML = data.response;    
+    console.log('user cred: ', data.response);
 }
 
 /*

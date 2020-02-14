@@ -19,6 +19,7 @@ app.use(express.static(__dirname + '/public'));
 //use sessions for tracking logins
 app.use(session({
   secret: 'iSDXHQ6CW87R9L930RCIQXCJWF',
+  cookie: {maxAge: 90000},
   resave: true,
   saveUninitialized: false,
   store: new MongoStore({
