@@ -1,6 +1,6 @@
 // server.js
-const   port        = process.env.PORT || 3004,
-        dbName      = 'su2db',
+const   port        = process.env.PORT || 3007,
+        dbName      = 'meddb',
         os          = require('os'),
         greeting    = require('./app/greeting'),
         bodyParser  = require('body-parser'),
@@ -11,7 +11,7 @@ const   port        = process.env.PORT || 3004,
         db          = require('./config/db'),
         app         = express();
         
-mongoose.connect(db.url, { useUnifiedTopology: true, dbName: dbName });
+mongoose.connect(db.url, { useUnifiedTopology: true, useNewUrlParser: true, dbName: dbName });
 const dbase = mongoose.connection;
 console.log("=====",dbase.client.s.url,'=====\n');        
 app.use(express.static(__dirname + '/public'));
