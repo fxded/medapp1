@@ -62,10 +62,30 @@ module.exports = function(app) {
             const   userData = JSON.parse(data);
                    
             User.authenticate(userData.email, userData.password, function (error, user) {
-                if (error || !user) {
-                    var err = new Error('Wrong email or password.');
+                if (error) {
+                    var err = new Error('Something went wrong at userDB!');
                     err.status = 401;
-                    console.log('------->error authenticate:', error);
+                    console.log('------->error by userDB', error);
+                } else if (!user) {
+                    Doctor.authenticate(userData.email, userData.password, function (error, user) {
+                        if (error) {
+                            var err = new Error('Something went wrong at doctorDB!');
+                            err.status = 401;
+                            res.send({error:err, msg:"Something went wrong!"});
+                            res.end();
+                            console.log('------->error by doctorDB', error);
+                        } else if (!user) {
+                            var err = new Error('Wrong email or password.');
+                            err.status = 401;
+                            res.send({error:err, msg:"Wrong email or password."});
+                            res.end();
+                            console.log('------->error authenticate:', error);                         
+                        } else {
+                            console.log('------->finding user:', user);
+                            req.session.userId = user._id;
+                            res.redirect('/profile');
+                        }
+                    });
                 } else {
                     console.log('------->finding user:', user);
                     req.session.userId = user._id;
@@ -90,9 +110,9 @@ module.exports = function(app) {
                 console.log('------->session is ended:', err);
                 res.redirect('/');
                 } else {
-                    res.send('<h1>Name: </h1>' + user.username + 
+                    res.send({data: '<h1>Name: </h1>' + user.username + 
                              '<h2>Mail: </h2>' + user.email +
-                             '<br><a type="button" href="/logout">Logout</a>');
+                             '<br><a type="button" href="/logout">Logout</a>'});
                     //res.render('index');
                 }
             }

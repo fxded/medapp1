@@ -11,8 +11,13 @@ document.querySelector('#loginBtn').onclick = function () {
 }
 
 function toProfile(data) {
-    document.querySelector('body').innerHTML = data.response;    
-    console.log('user cred: ', data.response);
+    let answer = JSON.parse(data.response);
+    if (answer.error) {
+        console.log('user cred11: ', answer);
+    } else {
+        document.querySelector('body').innerHTML = answer.data;    
+        console.log('user cred: ', answer);
+    }
 }
 
 /*
