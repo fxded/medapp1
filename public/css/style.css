@@ -72,8 +72,12 @@ h1 {
     font-weight: 700;
     margin-bottom: 1.5em;
 }
-.signin-form h3 span {
+.signin-form span {
     color: #0a4981;
+    padding: 2em 1.5em;
+}
+.signin-form span{
+     color: #FFF;
 }
 .signin-form img {
     border-radius: 50%;

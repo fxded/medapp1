@@ -1,6 +1,6 @@
-// routes/su_routes.js
+// routes/med_routes.js
 const User = require('../models/user');
-
+const Doctor = require('../models/doctor');
 
 module.exports = function(app) {
 
@@ -17,21 +17,38 @@ module.exports = function(app) {
             const   userData = JSON.parse(data),
                     item = {    username    : userData.name, 
                                 password    : userData.pass,
-                                email       : userData.email};
-                    
-            User.create(item, function (error, user) {
-                if (error) {
-                    console.log('bd_error: ', error);
-                    res.send(error);
-                    res.end();
-                } else {
-                    req.session.userId = user._id;
-                    console.log('result of insert: ', user);
-                    res.send(user);
-                    res.end();
-//                    return res.redirect('/profile');
-                }
-            });
+                                email       : userData.email,
+                                speciality  : userData.speciality};
+            
+            if (!item.speciality) {
+                User.create(item, function (error, user) {
+                    if (error) {
+                        console.log('bd_error: ', error);
+                        res.send(error);
+                        res.end();
+                    } else {
+                        req.session.userId = user._id;
+                        console.log('result of insert: ', user);
+                        res.send(user);
+                        res.end();
+    //                    return res.redirect('/profile');
+                    }
+                });
+            } else {
+                Doctor.create(item, function (error, user) {
+                    if (error) {
+                        console.log('bd_error: ', error);
+                        res.send(error);
+                        res.end();
+                    } else {
+                        req.session.userId = user._id;
+                        console.log('result of insert: ', user);
+                        res.send(user);
+                        res.end();
+    //                    return res.redirect('/profile');
+                    }
+                });
+            }
         });
         req.on('end', function(){
             console.log('end of requset');
