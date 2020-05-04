@@ -62,32 +62,32 @@ module.exports = function(app) {
             const   userData = JSON.parse(data);
                    
             User.authenticate(userData.email, userData.password, function (error, user) {
-                if (error) {
+                if ((error) && !(error.status == 401)) {
                     var err = new Error('Something went wrong at userDB!');
                     err.status = 401;
                     console.log('------->error by userDB', error);
-                } else if (!user) {
+                } else if (error && error.status == 401) {
                     Doctor.authenticate(userData.email, userData.password, function (error, user) {
-                        if (error) {
+                        if ((error) && !(error.status == 401)) {
                             var err = new Error('Something went wrong at doctorDB!');
                             err.status = 401;
                             res.send({error:err, msg:"Something went wrong!"});
                             res.end();
                             console.log('------->error by doctorDB', error);
-                        } else if (!user) {
+                        } else if (error && error.status == 401) {
                             var err = new Error('Wrong email or password.');
                             err.status = 401;
                             res.send({error:err, msg:"Wrong email or password."});
                             res.end();
                             console.log('------->error authenticate:', error);                         
                         } else {
-                            console.log('------->finding user:', user);
+                            console.log('------->finding doctors:', user);
                             req.session.userId = user._id;
-                            res.redirect('/profile');
+                            res.redirect('/profileDoctor');
                         }
                     });
                 } else {
-                    console.log('------->finding user:', user);
+                    console.log('------->finding user11:', user);
                     req.session.userId = user._id;
                     res.redirect('/profile');
                 }
@@ -110,9 +110,30 @@ module.exports = function(app) {
                 console.log('------->session is ended:', err);
                 res.redirect('/');
                 } else {
-                    res.send({data: '<h1>Name: </h1>' + user.username + 
-                             '<h2>Mail: </h2>' + user.email +
-                             '<br><a type="button" href="/logout">Logout</a>'});
+                    res.send({data: '<h1>Name: ' + user.username + 
+                             '</h1> <h2>Mail: ' + user.email +
+                             '</h2> <br><a type="button" href="/logout">Logout</a>'});
+                    //res.render('index');
+                }
+            }
+        });
+    });
+    // Get Doctors profile
+    app.get('/profileDoctor', function (req, res, next) {
+        Doctor.findById(req.session.userId).exec(function (error, user) {
+            if (error) {
+                    console.log('------->session is error:', error);
+            } else {
+                if (user === null) {
+                var err = new Error('Not authorized! Go back!');
+                err.status = 400;
+                console.log('------->session is ended:', err);
+                res.redirect('/');
+                } else {
+                    res.send({data: '<h1>Name: ' + user.username + 
+                             '</h1> <h2>Mail: ' + user.email +
+                             '</h2> <h2>Speciality: ' + user.speciality +
+                             '</h2> <br><a type="button" href="/logout">Logout</a>'});
                     //res.render('index');
                 }
             }

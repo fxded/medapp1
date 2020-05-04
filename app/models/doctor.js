@@ -31,16 +31,18 @@ DoctorSchema.statics.authenticate = function (email, password, callback) {
       if (err) {
         return callback(err)
       } else if (!user) {
-        var err = new Error('User not found.');
-        err.status = 401;
-        return callback(err);
+        var err2 = new Error('Doctor not found.');
+        err2.status = 401;
+        return callback(err2);
       }
       bcrypt.compare(password, user.password, function (err, result) {
         if (result === true) {
           return callback(null, user);
         } else {
-          return callback();
-        }
+            var err2 = new Error('Wrong Doctors password.');
+            err2.status = 401;
+            return callback(err2);
+         }
       })
     });
 }
