@@ -83,7 +83,8 @@ module.exports = function(app) {
                         } else {
                             console.log('------->finding doctors:', user);
                             req.session.userId = user._id;
-                            res.redirect('/profileDoctor');
+                            res.send({data: 'finding is ok'
+                                    , file: 'doctorProfile.html'});
                         }
                     });
                 } else {
@@ -130,10 +131,12 @@ module.exports = function(app) {
                 console.log('------->session is ended:', err);
                 res.redirect('/');
                 } else {
+                    //res.sendfile('doctorProfile.html');
                     res.send({data: '<h1>Name: ' + user.username + 
                              '</h1> <h2>Mail: ' + user.email +
                              '</h2> <h2>Speciality: ' + user.speciality +
                              '</h2> <br><a type="button" href="/logout">Logout</a>'});
+                    res.end();
                     //res.render('index');
                 }
             }

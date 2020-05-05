@@ -15,7 +15,8 @@ function toProfile(data) {
     if (answer.error) {
         console.log('user cred11: ', answer);
     } else {
-        document.querySelector('body').innerHTML = answer.data;    
+//        document.querySelector('body').innerHTML = answer.data;
+        document.location.href = answer.file;
         console.log('user cred: ', answer);
     }
 }
