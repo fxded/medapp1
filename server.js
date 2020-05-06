@@ -11,7 +11,11 @@ const   port        = process.env.PORT || 3007,
         db          = require('./config/db'),
         app         = express();
         
-mongoose.connect(db.url, { useUnifiedTopology: true, useNewUrlParser: true, dbName: dbName });
+mongoose.connect(db.url, { useUnifiedTopology: true
+                         , useNewUrlParser: true
+                         , dbName: dbName
+                         , useFindAndModify: false 
+});
 const dbase = mongoose.connection;
 console.log("=====",dbase.client.s.url,'=====\n');        
 app.use(express.static(__dirname + '/public'));
@@ -19,7 +23,7 @@ app.use(express.static(__dirname + '/public'));
 //use sessions for tracking logins
 app.use(session({
   secret: 'iSDXHQ6CW87R9L930RCIQXCJWF',
-  cookie: {maxAge: 90000},
+  cookie: {maxAge: 9000000},
   resave: true,
   saveUninitialized: false,
   store: new MongoStore({

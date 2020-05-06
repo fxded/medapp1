@@ -21,7 +21,14 @@ var DoctorSchema = new mongoose.Schema({
   speciality: {
     type: String,
     required: true,
-  }    
+  },
+  timeToWork: {
+      type: Array
+  },
+  appointment: {
+    patient: { type: String },
+    time: { type: String }
+  }
 });
 
 //authenticate input against database

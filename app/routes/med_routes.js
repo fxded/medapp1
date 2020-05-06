@@ -157,5 +157,35 @@ module.exports = function(app) {
             });
         }
     });
+    
+    // POST to set reception time by doctors
+    app.post('/setParameter', function (req, res) {
+        req.on('data', function(data){
+            console.log('setParameter: ', data.toString());
+            const   userData = JSON.parse(data);
+            Doctor.findOneAndUpdate({ _id: req.session.userId}, userData, {new: true}, 
+                                      function(error, user) {
+                if (error) {
+                        console.log('------->setParameter is error:', error);
+                } else {
+                    if (user === null) {
+                    var err = new Error('setParameter is issue');
+                    err.status = 400;
+                    console.log('------->setParameter is ended:', err);
+                    res.send({error:err, msg:"setParameter is issue."});
+                    } else {
+                        res.send({data: user});
+                        res.end();
+                    }
+                }
+                                          
+            });
+        });
+        req.on('end', function(){
+            console.log('end of setParameter');
+        });
+
+         //console.log('setParameter', req);
+    });
 
 }

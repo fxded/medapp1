@@ -28,11 +28,13 @@ document.querySelector('#set').onclick = function () {
     document.querySelector('#promis').innerHTML = "You have today " 
                                                     + arrReception.length 
                                                     + " sessions";
-    //ajax('/setParameter', 'POST', setReception, arrReception);
+    ajax('/setParameter', 'POST', setReception, JSON.stringify({timeToWork: arrReception}));
 }
 
-function setReception () {
-    
+function setReception (data) {
+    data = JSON.parse(data.response);
+    console.log('setParameter: ', data, data.data);
+    document.querySelector('#promis').innerHTML += " at " + data.data.timeToWork;
 }
 
 /*
