@@ -90,8 +90,8 @@ module.exports = function(app) {
                 } else {
                     console.log('------->finding user11:', user);
                     req.session.userId = user._id;
-                    res.redirect('/profile');
-                }
+                    res.send({data: 'finding is ok'
+                            , file: 'patientProfile.html'});                }
             });
         });
         req.on('end', function(){
@@ -100,7 +100,7 @@ module.exports = function(app) {
     });
 
     // GET route after registering
-    app.get('/profile', function (req, res, next) {
+    app.get('/profilePatient', function (req, res, next) {
         User.findById(req.session.userId).exec(function (error, user) {
             if (error) {
                     console.log('------->session is error:', error);
@@ -113,7 +113,7 @@ module.exports = function(app) {
                 } else {
                     res.send({data: '<h1>Name: ' + user.username + 
                              '</h1> <h2>Mail: ' + user.email +
-                             '</h2> <br><a type="button" href="/logout">Logout</a>'});
+                             '</h2>'});
                     //res.render('index');
                 }
             }
@@ -135,7 +135,7 @@ module.exports = function(app) {
                     res.send({data: '<h1>Name: ' + user.username + 
                              '</h1> <h2>Mail: ' + user.email +
                              '</h2> <h2>Speciality: ' + user.speciality +
-                             '</h2> <br><a type="button" href="/logout">Logout</a>'});
+                             '</h2>'});
                     res.end();
                     //res.render('index');
                 }

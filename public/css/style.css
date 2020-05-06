@@ -493,4 +493,16 @@ h1 {
                 display: inline; /* Отображать как строчный элемент */
                 padding: 0 0px;
             } 
-/
+/* apply button */
+            .active1 a {
+                display: inline; 
+                float: left;
+                color: #f2f2f2;
+                background-color: #4CAF50;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+                text-align: start;
+            }
+
