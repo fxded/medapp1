@@ -111,9 +111,20 @@ module.exports = function(app) {
                 console.log('------->session is ended:', err);
                 res.redirect('/');
                 } else {
-                    res.send({data: '<h1>Name: ' + user.username + 
-                             '</h1> <h2>Mail: ' + user.email +
-                             '</h2>'});
+                    Doctor.find({ $where: function () { 
+                                            return (this.timeToWork && this.timeToWork.length > 0)
+                                        }
+                                }
+                                , { timeToWork: 1, username: 1, speciality: 1, _id: 0 }
+                                , function (err, data) {
+                                        if (err) throw err;
+                                        console.log("=====request from doctors:", data);
+                                        res.send({ head: '<h1>Name: ' + user.username + 
+                                                         '</h1> <h2>Mail: ' + user.email +
+                                                         '</h2>'
+                                                 , data: data });
+                                        res.end();
+                    });
                     //res.render('index');
                 }
             }
