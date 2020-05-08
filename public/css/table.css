@@ -37,7 +37,7 @@
     margin-right: 1px;
     padding: 1px 3px 1px 3px;
     border-radius: 5px;
-    cursor:default;
+    cursor:pointer;
 }
 .spanBtn span {
     background-color:cornflowerblue;
