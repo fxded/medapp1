@@ -112,14 +112,12 @@ module.exports = function(app) {
                 res.redirect('/');
                 } else {
                     Doctor.find({ timeToWork: { $gt: []  } }
-                                , { speciality: 1, username: 1, timeToWork: 1, _id: 0 }
-                                , function (err, data) {
+                                , { speciality: 1, username: 1, timeToWork: 1, _id: 1 }
+                                , function (err, timeToWorkdata) {
                                         if (err) throw err;
-                                        console.log("=====request from doctors:", data);
-                                        res.send({ head: '<h1>Name: ' + user.username + 
-                                                         '</h1> <h2>Mail: ' + user.email +
-                                                         '</h2>'
-                                                 , data: data });
+                                        console.log("=====request from doctors:", timeToWorkdata);
+                                        res.send({ head: '<h1>Name: ' + user.username + '</h1>' 
+                                                 , sessionData: timeToWorkdata });
                                         res.end();
                     });
                     //res.render('index');
@@ -196,4 +194,36 @@ module.exports = function(app) {
          //console.log('setParameter', req);
     });
 
+    // POST to select session 
+    app.post('/selSession', function (req, res) {
+        req.on('data', function(data){
+            console.log('------selSession: ', data.toString());
+            const   userData = JSON.parse(data);
+/*            Doctor.findOneAndUpdate({ _id: req.session.userId}, userData, {new: true}, 
+                                      function(error, user) {
+                if (error) {
+                        console.log('------->setParameter is error:', error);
+                } else {
+                    if (user === null) {
+                    var err = new Error('setParameter is issue');
+                    err.status = 400;
+                    console.log('------->setParameter is ended:', err);
+                    res.send({error:err, msg:"setParameter is issue."});
+                    } else {
+                        res.send({data: user});
+                        res.end();
+                    }
+                }
+                                          
+            });*/
+            res.send(data);
+        });
+        req.on('end', function(){
+            console.log('end of setSession');
+        });
+
+         //console.log('setParameter', req);
+    });
+
+    
 }

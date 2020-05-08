@@ -151,6 +151,11 @@ h5 {
     border-left: 1px dotted #7467b9;
     padding: 0.5em;
 }
+h2 {
+    border-left: 1px dotted #7467b9;
+    color: #fff;
+    padding: 1.5em;
+}
 .header-social a.face{
   background:url(../images/fac.png)no-repeat 12px 9px #3B62A3;
   color: #0a4981;

@@ -16,6 +16,7 @@
         </script>
         <!-- Custom Theme files -->
         <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/table.css" rel="stylesheet" type="text/css" media="all" />
         <!--web-fonts--
         <link href='//fonts.googleapis.com/css?family=Jura:400,300,500,600' rel='stylesheet' type='text/css'>
         <!--//web-fonts-->
@@ -31,9 +32,22 @@
                 <li class="wrap-li"><a class="active" href="/logout">Logout</a></li>
             </ul>
         </div>
-        <h1 id='h1Name'>Profile of </h1>
+        <!--h1 id='h1Name'>Profile of </h1-->
         <div id='temp'></div>
-        <div id='promise'></div>
+        <div id='promise'>
+            <h2>Available specialists</h2>
+            <table class="tables">
+                <thead>
+                    <tr>
+                        <td>Specialists</td>
+                        <td>Name</td>
+                        <td>Sessions</td>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
        <!-- main -->
         <div class="copyright">
             <p> &copy; 2020 Register and Login page. All rights reserved | Design by <a href="http://w3layouts.com/" target="_blank" >W3layouts </a>Votintsev Vasiliy</p>
