@@ -111,11 +111,8 @@ module.exports = function(app) {
                 console.log('------->session is ended:', err);
                 res.redirect('/');
                 } else {
-                    Doctor.find({ $where: function () { 
-                                            return (this.timeToWork && this.timeToWork.length > 0)
-                                        }
-                                }
-                                , { timeToWork: 1, username: 1, speciality: 1, _id: 0 }
+                    Doctor.find({ timeToWork: { $gt: []  } }
+                                , { speciality: 1, username: 1, timeToWork: 1, _id: 0 }
                                 , function (err, data) {
                                         if (err) throw err;
                                         console.log("=====request from doctors:", data);
