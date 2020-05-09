@@ -25,6 +25,9 @@ var DoctorSchema = new mongoose.Schema({
   timeToWork: {
       type: Array
   },
+  temp: {
+      type: String
+  },
   appointment: {
     patient: { type: String },
     time: { type: String }

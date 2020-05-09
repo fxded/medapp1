@@ -117,6 +117,7 @@ module.exports = function(app) {
                                         if (err) throw err;
                                         console.log("=====request from doctors:", timeToWorkdata);
                                         res.send({ head: '<h1>Name: ' + user.username + '</h1>' 
+                                                 , idPatient: req.session.userId
                                                  , sessionData: timeToWorkdata });
                                         res.end();
                     });
@@ -199,27 +200,32 @@ module.exports = function(app) {
         req.on('data', function(data){
             console.log('------selSession: ', data.toString());
             const   userData = JSON.parse(data);
-/*            Doctor.findOneAndUpdate({ _id: req.session.userId}, userData, {new: true}, 
-                                      function(error, user) {
+            if (userData.action) {
+                Doctor.findOneAndUpdate({ _id: userData.idDoctor}
+                                        , {temp: userData.index }
+                                        , {new: true}
+                                        , function(error, user) {
                 if (error) {
-                        console.log('------->setParameter is error:', error);
+                        console.log('------->insert temp is error:', error);
                 } else {
                     if (user === null) {
-                    var err = new Error('setParameter is issue');
+                    var err = new Error('insert temp is issue');
                     err.status = 400;
-                    console.log('------->setParameter is ended:', err);
-                    res.send({error:err, msg:"setParameter is issue."});
+                    console.log('------->insert temp is ended:', err);
+                    res.send({error:err, msg:"insert temp is issue."});
                     } else {
                         res.send({data: user});
                         res.end();
                     }
                 }
-                                          
-            });*/
-            res.send(data);
+            });
+          } else {
+                
+            }
+            //res.send(data);
         });
         req.on('end', function(){
-            console.log('end of setSession');
+            console.log('end of selSession');
         });
 
          //console.log('setParameter', req);
