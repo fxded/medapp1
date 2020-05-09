@@ -202,24 +202,46 @@ module.exports = function(app) {
             const   userData = JSON.parse(data);
             if (userData.action) {
                 Doctor.findOneAndUpdate({ _id: userData.idDoctor}
-                                        , {temp: userData.index }
+                                        , { $push: { temp: { patient: userData.idPatient
+                                                            ,time: userData.time }}
+                                        , $pull: { timeToWork: userData.time}}
                                         , {new: true}
                                         , function(error, user) {
-                if (error) {
-                        console.log('------->insert temp is error:', error);
-                } else {
-                    if (user === null) {
-                    var err = new Error('insert temp is issue');
-                    err.status = 400;
-                    console.log('------->insert temp is ended:', err);
-                    res.send({error:err, msg:"insert temp is issue."});
+                    if (error) {
+                            console.log('------->insert temp is error:', error);
                     } else {
-                        res.send({data: user});
-                        res.end();
+                        if (user === null) {
+                        var err = new Error('insert temp is issue');
+                        err.status = 400;
+                        console.log('------->insert temp is ended:', err);
+                        res.send({error:err, msg:"insert temp is issue."});
+                        } else {
+                            res.send({data: user});
+                            res.end();
+                        }
                     }
-                }
-            });
+                });
           } else {
+                Doctor.findOneAndUpdate({ _id: userData.idDoctor}
+                                        , { $pull: { temp: { patient: userData.idPatient
+                                                            ,time: userData.time }}
+                                        , $push: { timeToWork: userData.time}}
+                                        , {new: true}
+                                        , function(error, user) {
+                    if (error) {
+                            console.log('------->insert temp is error:', error);
+                    } else {
+                        if (user === null) {
+                        var err = new Error('insert temp is issue');
+                        err.status = 400;
+                        console.log('------->insert temp is ended:', err);
+                        res.send({error:err, msg:"insert temp is issue."});
+                        } else {
+                            res.send({data: user});
+                            res.end();
+                        }
+                    }
+                });
                 
             }
             //res.send(data);

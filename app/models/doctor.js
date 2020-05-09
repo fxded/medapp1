@@ -26,7 +26,7 @@ var DoctorSchema = new mongoose.Schema({
       type: Array
   },
   temp: {
-      type: String
+      type: Array
   },
   appointment: {
     patient: { type: String },

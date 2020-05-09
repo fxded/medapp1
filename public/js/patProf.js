@@ -41,6 +41,7 @@ function selectSession () {
         data = JSON.stringify({ idDoctor: this.parentNode.parentNode.id
                                 ,idPatient: this.parentNode.parentNode.parentNode.idPatient
                                 ,index: [...this.parentNode.childNodes].indexOf(this)
+                                ,time: this.innerHTML
                                 ,action: this.sel });
         ajax('/selSession', 'POST', getAnswer, data);
     }
