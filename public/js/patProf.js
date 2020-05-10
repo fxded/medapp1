@@ -4,7 +4,7 @@ ajax('/profilePatient', 'GET', getUserData, null);
 
 function getUserData(result) {
     let table = document.querySelector('#tbody'),
-        row, cell, span;
+        row, cell, span, appo;
     result = JSON.parse(result.response);
     console.log('by getUserData: ',result);
     document.querySelector('#temp').innerHTML = result.head;
@@ -15,13 +15,25 @@ function getUserData(result) {
         row.insertCell().innerHTML = item.speciality;
         row.insertCell().innerHTML = item.username;
         cell = row.insertCell();
-        cell.classList.add('spanBtn');
+        appo = result.appointment.filter(s => (s.doctor == item._id));
+        if (appo.length > 0) {
+            cell.classList.add('unavailable');
+            span = document.createElement('span');
+            span.innerHTML = appo[0].time;
+            span.onclick = selectSession;
+            span.sel = true;
+            span.classList.add('selected');
+            cell.appendChild(span);
+            span.parentNode.sel = true;
+        } else {
+            cell.classList.add('spanBtn');
+        }
         for (let s of item.timeToWork) {
             span = document.createElement('span');
             span.innerHTML = s;
             span.onclick = selectSession;
             cell.appendChild(span);
-        } 
+        }
     });
 }
 
@@ -50,4 +62,5 @@ function selectSession () {
 function getAnswer(result) {
     result = JSON.parse(result.response);
     console.log('by getAnswer: ',result);
+    
 }

@@ -115,9 +115,12 @@ module.exports = function(app) {
                                 , { speciality: 1, username: 1, timeToWork: 1, _id: 1 }
                                 , function (err, timeToWorkdata) {
                                         if (err) throw err;
-                                        console.log("=====request from doctors:", timeToWorkdata);
+                                        console.log("=====request from doctors:"
+                                                    , timeToWorkdata
+                                                    , user.appointment);
                                         res.send({ head: '<h1>Name: ' + user.username + '</h1>' 
                                                  , idPatient: req.session.userId
+                                                 , appointment: user.appointment
                                                  , sessionData: timeToWorkdata });
                                         res.end();
                     });
@@ -216,11 +219,28 @@ module.exports = function(app) {
                         console.log('------->insert temp is ended:', err);
                         res.send({error:err, msg:"insert temp is issue."});
                         } else {
-                            res.send({data: user});
-                            res.end();
-                        }
-                    }
-                });
+                            User.findOneAndUpdate(
+                                  { _id: userData.idPatient}
+                                , { $push: { appointment: { 
+                                        doctor: userData.idDoctor
+                                              , time: userData.time }}}
+                                , {new: true}                           
+                                , function(error2, user2) {
+                                    if (error2) {
+                                            console.log('------->insert temp is error:', error2);
+                                    } else {
+                                        if (user2 === null) {
+                                        var err2 = new Error('insert temp is issue');
+                                        err2.status = 400;
+                                        console.log('------->insert temp is ended:', err2);
+                                        res.send({error:err2, msg:"insert temp is issue."});
+                                        } else {
+                                            res.send({data: user2});
+                                            res.end();
+                                        }
+                                    }
+                                });
+                        }}});
           } else {
                 Doctor.findOneAndUpdate({ _id: userData.idDoctor}
                                         , { $pull: { temp: { patient: userData.idPatient
@@ -237,12 +257,28 @@ module.exports = function(app) {
                         console.log('------->insert temp is ended:', err);
                         res.send({error:err, msg:"insert temp is issue."});
                         } else {
-                            res.send({data: user});
-                            res.end();
-                        }
-                    }
-                });
-                
+                            User.findOneAndUpdate(
+                                  { _id: userData.idPatient}
+                                , { $pull: { appointment: { 
+                                        doctor: userData.idDoctor
+                                              , time: userData.time }}}
+                                , {new: true}                           
+                                , function(error2, user2) {
+                                    if (error2) {
+                                            console.log('------->insert temp is error:', error2);
+                                    } else {
+                                        if (user2 === null) {
+                                        var err2 = new Error('insert temp is issue');
+                                        err2.status = 400;
+                                        console.log('------->insert temp is ended:', err2);
+                                        res.send({error:err2, msg:"insert temp is issue."});
+                                        } else {
+                                            res.send({data: user2});
+                                            res.end();
+                                        }
+                                    }
+                                });
+                        }}});
             }
             //res.send(data);
         });
