@@ -16,6 +16,8 @@
         </script>
         <!-- Custom Theme files -->
         <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/table.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/docProf.css" rel="stylesheet" type="text/css" media="all" />
         <!--web-fonts--
         <link href='//fonts.googleapis.com/css?family=Jura:400,300,500,600' rel='stylesheet' type='text/css'>
         <!--//web-fonts-->
@@ -31,17 +33,29 @@
                 <li class="wrap-li"><a class="active" href="/logout">Logout</a></li>
             </ul>
         </div>
-        <h1 id='h1Name'>Profile of </h1>
         <div id='temp'></div>
         <div id='settings'>
-            Please set the time for a single session
+            <label> Please set the time for a single session </label>
             <input id="session" type="text" name="session" placeholder="minute" value="30" required=""><br>
-            Please set the reception time from
-            <input id="startTime" type="time" name="startTime" placeholder="start" required="" value="14:30"> to <input id="endTime" type="time" name="endTime" placeholder="end" required="" value="18:00">
-            <div class="active1" style="background: #FFF">
-                <a id="set">Apply</a>
-            </div><br><br><br>
-            <div id='promis'></div>
+            <label> Please set the reception time from </label>
+            <input id="startTime" type="time" name="startTime" placeholder="start" required="" value="14:30"> <span style="color:white">to<span> <input id="endTime" type="time" name="endTime" placeholder="end" required="" value="18:00">
+        </div>
+        <div class="active1">
+            <a id="set">Apply</a>
+        </div>
+        <div id='sessions' class="text"></div> 
+        <div id='promise'>
+            <table id="table" class="tables hide">
+                <p class="text bold">You have an appointment today</p>
+                <thead>
+                    <tr>
+                        <td>Patient</td>
+                        <td>Time</td>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
         </div>
         
        <!-- main -->

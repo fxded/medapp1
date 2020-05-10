@@ -154,7 +154,10 @@ h5 {
 h2 {
     border-left: 1px dotted #7467b9;
     color: #fff;
-    padding: 1.5em;
+    text-align: center;
+    padding: 0 0 1em 0;
+    font-size: 2em;
+    font-weight: 300;
 }
 .header-social a.face{
   background:url(../images/fac.png)no-repeat 12px 9px #3B62A3;
@@ -221,7 +224,7 @@ h2 {
 }
 /*--copyright--*/
 .copyright {
-    margin: 2em;
+    margin: 0.2em;
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -498,9 +501,9 @@ h1 {
                 display: inline; /* Отображать как строчный элемент */
                 padding: 0 0px;
             } 
-/* apply button */
-            .active1 a {
-                display: inline; 
+/* apply button 
+            .active1 {
+                display: block; 
                 float: left;
                 color: #f2f2f2;
                 background-color: #4CAF50;
@@ -508,6 +511,6 @@ h1 {
                 padding: 14px 16px;
                 text-decoration: none;
                 font-size: 17px;
-                text-align: start;
+                text-align: end;
             }
-
+*/

@@ -7,7 +7,8 @@ function getUserData(result) {
         row, cell, span, appo;
     result = JSON.parse(result.response);
     console.log('by getUserData: ',result);
-    document.querySelector('#temp').innerHTML = result.head;
+    document.querySelector('#temp').innerHTML = '<h1>' + result.head + '<h1>';
+    table.namePatient = result.head;
     table.idPatient = result.idPatient;
     result.sessionData.forEach (function(item) {
         row = table.insertRow();
@@ -52,6 +53,7 @@ function selectSession () {
         this.sel = this.sel?false:true;
         data = JSON.stringify({ idDoctor: this.parentNode.parentNode.id
                                 ,idPatient: this.parentNode.parentNode.parentNode.idPatient
+                                ,namePatient: this.parentNode.parentNode.parentNode.namePatient
                                 ,index: [...this.parentNode.childNodes].indexOf(this)
                                 ,time: this.innerHTML
                                 ,action: this.sel });

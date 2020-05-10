@@ -118,7 +118,7 @@ module.exports = function(app) {
                                         console.log("=====request from doctors:"
                                                     , timeToWorkdata
                                                     , user.appointment);
-                                        res.send({ head: '<h1>Name: ' + user.username + '</h1>' 
+                                        res.send({ head: user.username 
                                                  , idPatient: req.session.userId
                                                  , appointment: user.appointment
                                                  , sessionData: timeToWorkdata });
@@ -129,6 +129,7 @@ module.exports = function(app) {
             }
         });
     });
+    
     // Get Doctors profile
     app.get('/profileDoctor', function (req, res, next) {
         Doctor.findById(req.session.userId).exec(function (error, user) {
@@ -141,13 +142,11 @@ module.exports = function(app) {
                 console.log('------->session is ended:', err);
                 res.redirect('/');
                 } else {
-                    //res.sendfile('doctorProfile.html');
-                    res.send({data: '<h1>Name: ' + user.username + 
-                             '</h1> <h2>Mail: ' + user.email +
-                             '</h2> <h2>Speciality: ' + user.speciality +
-                             '</h2>'});
+                    res.send({ head: '<h1>Name: ' + user.username + '</h1> <h2>Speciality: ' 
+                                                 + user.speciality + '</h2>'
+                              , appointment: user.temp
+                              , timeToWork: user.timeToWork });
                     res.end();
-                    //res.render('index');
                 }
             }
         });
@@ -206,6 +205,7 @@ module.exports = function(app) {
             if (userData.action) {
                 Doctor.findOneAndUpdate({ _id: userData.idDoctor}
                                         , { $push: { temp: { patient: userData.idPatient
+                                                            ,name: userData.namePatient
                                                             ,time: userData.time }}
                                         , $pull: { timeToWork: userData.time}}
                                         , {new: true}
@@ -244,6 +244,7 @@ module.exports = function(app) {
           } else {
                 Doctor.findOneAndUpdate({ _id: userData.idDoctor}
                                         , { $pull: { temp: { patient: userData.idPatient
+                                                            ,name: userData.namePatient
                                                             ,time: userData.time }}
                                         , $push: { timeToWork: userData.time}}
                                         , {new: true}

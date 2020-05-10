@@ -50,4 +50,5 @@ document.querySelector('#signup-submit').onclick = function () {
 function showData(data) {
     data = JSON.parse(data.response);
     console.log('user cred: ', data);
-}
+    document.location.href = "login.html";
+ }
